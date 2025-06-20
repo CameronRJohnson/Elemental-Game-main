@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     public Animator spinner;
 
 
-    public List<Element> collectedPotions = new List<Element>(); // Track collected potions
+    public List<Element> collectedPotions = new List<Element>();
 
     public void PauseTime() {
         Time.timeScale = 0;
@@ -34,16 +34,12 @@ public class UIManager : MonoBehaviour
         mainCamera.SetActive(false);
         mainUI.SetActive(false);
 
-        // Start the Wait coroutine
         StartCoroutine(WaitAndEnableGameUI());
     }
 
-    // Coroutine to wait and then enable the game UI after the spinner animation
     private IEnumerator WaitAndEnableGameUI() {
-        // Wait for 5 seconds
         yield return new WaitForSeconds(2f);
 
-        // After the wait, enable the game UI
         gameUI.SetActive(true);
     }
 }

@@ -8,7 +8,6 @@ public class CloudItem : MonoBehaviour
     private Cloud cloud;
     public Image image;
 
-    // Initialize the InventoryItem with Potion data
     public void InitializeCloud(Cloud newCloud)
     {
         cloud = newCloud;
@@ -17,16 +16,12 @@ public class CloudItem : MonoBehaviour
 
     public void ChangeSelectedCloud()
     {
-        // Find the player's inventory
         var playerInventory = PlayerInventory.Instance;
 
         if (playerInventory != null && playerInventory.clouds.Contains(cloud))
         {
-            // Changes the selected cloud
             playerInventory.selectedCloud = cloud;
-            // Changes the image
             playerInventory.UpdateAllImages();
-            // Saves this in the inventory
             playerInventory.SaveInventory();
         }
         else

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public Weapon weaponData; // Reference to the Weapon ScriptableObject
+    public Weapon weaponData;
 
     private Rigidbody rb;
 

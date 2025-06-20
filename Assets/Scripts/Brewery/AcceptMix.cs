@@ -12,7 +12,6 @@ public class AcceptMix : MonoBehaviour
     public Cloud cloud;
     public Weapon weapon;
 
-    // Called when the user accepts the item
     public void AcceptItem()
     {
         if (item != null)
@@ -22,13 +21,11 @@ public class AcceptMix : MonoBehaviour
             if (itemTag == "Cloud")
             {
                 Debug.Log($"Accepted a Cloud: {item.name}");
-                // Add specific behavior for accepting Cloud items here
                 PlayerInventory.Instance.AddCloudToInventory(cloud);
             }
             else if (itemTag == "Weapon")
             {
                 Debug.Log($"Accepted a Weapon: {item.name}");
-                // Add specific behavior for accepting Weapon items here
                 PlayerInventory.Instance.AddWeaponToInventory(weapon);
             }
             else
@@ -36,7 +33,7 @@ public class AcceptMix : MonoBehaviour
                 Debug.LogWarning($"Item with tag {itemTag} is not handled in AcceptItem.");
             }
 
-            ClearItemInfo(); // Clear UI after accepting
+            ClearItemInfo();
         }
         else
         {
@@ -45,13 +42,12 @@ public class AcceptMix : MonoBehaviour
         ClearElements();
     }
 
-    // Called when the user rejects the item
     public void RejectItem()
     {
         if (item != null)
         {
             Debug.Log($"Rejected: {item.name}");
-            ClearItemInfo(); // Clear UI after rejecting
+            ClearItemInfo();
             reset.RemovePotions();
             
         }
@@ -61,7 +57,6 @@ public class AcceptMix : MonoBehaviour
         }
     }
 
-    // Updates the UI with new item info
     public void ChangeItemInfo(Sprite newItemImage, string newItemName)
     {
         itemImage.sprite = newItemImage;
@@ -69,13 +64,12 @@ public class AcceptMix : MonoBehaviour
         Debug.Log($"Displaying item: {newItemName}");
     }
 
-    // Clears the UI when no item is selected
     private void ClearItemInfo()
     {
         itemImage.sprite = null;
         itemInfoText.text = string.Empty;
 
-        item = null; // Clear reference to the current item
+        item = null;
     }
 
     private void ClearElements() {

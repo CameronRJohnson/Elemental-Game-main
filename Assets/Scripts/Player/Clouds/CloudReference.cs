@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class CloudReference : MonoBehaviour
 {
-    public Cloud cloud; // Reference to the Weapon ScriptableObject
+    public Cloud cloud;
 }

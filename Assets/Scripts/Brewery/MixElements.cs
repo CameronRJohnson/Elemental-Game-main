@@ -26,20 +26,16 @@ public class MixElements : MonoBehaviour
 
     public void Mix()
     {
-        // Clear previous elements to avoid duplicates
         elements.Clear();
 
-        // Find all GameObjects tagged as "Potion"
         GameObject[] potionGameObjects = GameObject.FindGameObjectsWithTag("Potion");
 
         foreach (GameObject potionGameObject in potionGameObjects)
         {
-            // Get the ElementReference component attached to the GameObject
             ElementReference elementReference = potionGameObject.GetComponent<ElementReference>();
 
             if (elementReference != null && elementReference.element != null)
             {
-                // Add the potion's type to the list
                 elements.Add(elementReference.element.potionType.ToString());
             }
             else
@@ -48,24 +44,23 @@ public class MixElements : MonoBehaviour
             }
         }
 
-        // Calculate and display the reward
         if (CalculateReward())
         {
-            acceptOrNotDisplay.SetActive(true); // Show the accept/reject panel
+            acceptOrNotDisplay.SetActive(true);
         }
         else
         {
-            acceptOrNotDisplay.SetActive(false); // Hide the panel if no valid mix
-            StartCoroutine(FlashButtonRed()); // Flash the button red
+            acceptOrNotDisplay.SetActive(false);
+            StartCoroutine(FlashButtonRed());
         }
     }
 
 
     private IEnumerator FlashButtonRed()
     {
-        CreateButton.color = Color.red; // Set the button to red
-        yield return new WaitForSeconds(0.5f); // Wait for the flash duration
-        CreateButton.color = Color.white; // Reset the button to its original color
+        CreateButton.color = Color.red;
+        yield return new WaitForSeconds(0.5f);
+        CreateButton.color = Color.white;
     }
 
 
@@ -75,7 +70,6 @@ public class MixElements : MonoBehaviour
     {
         if (elements.Count > 0)
         {
-            // Separate special and basic elements
             var specialElement = elements.FirstOrDefault(e => specialElements.Contains(e));
             var basicElementCounts = elements.Where(e => basicElements.Contains(e))
                                              .GroupBy(e => e)
@@ -83,38 +77,35 @@ public class MixElements : MonoBehaviour
 
             if (!string.IsNullOrEmpty(specialElement) && basicElementCounts.Count > 0)
             {
-                // Find the most common basic element
                 var mostCommonBasicElement = basicElementCounts.OrderByDescending(x => x.Value).FirstOrDefault();
 
                 Debug.Log($"Special Element: {specialElement}");
                 Debug.Log($"Most Common Basic Element: {mostCommonBasicElement.Key} with {mostCommonBasicElement.Value} occurrences.");
 
-                // Determine and display the reward
                 string reward = DetermineReward(specialElement, mostCommonBasicElement.Key);
                 if (!string.IsNullOrEmpty(reward))
                 {
-                    if (IsRewardAlreadyOwned(reward)) // Check directly in the inventory
+                    if (IsRewardAlreadyOwned(reward))
                     {
-                        StartCoroutine(FlashButtonRed()); // Flash red if duplicate
-                        return false; // Invalid mix as the item is already owned
+                        StartCoroutine(FlashButtonRed());
+                        return false;
                     }
 
                     Debug.Log($"You have created: {reward}");
-                    return true; // Valid mix found
+                    return true;
                 }
             }
         }
 
         Debug.Log("No valid combination of elements found.");
         acceptMix.item = null;
-        return false; // Invalid mix
+        return false;
     }
 
     private bool IsRewardAlreadyOwned(string reward)
     {
         var inventory = PlayerInventory.Instance;
 
-        // Check if the reward exists in weapons or clouds
         if (inventory.weapons.Any(w => w.name == reward) || inventory.clouds.Any(c => c.name == reward))
         {
             return true;
@@ -124,7 +115,6 @@ public class MixElements : MonoBehaviour
     }
     private string DetermineReward(string specialElement, string mostCommonBasicElement)
     {
-        // Define reward mappings for each combination
         var rewardMappings = new Dictionary<string, Dictionary<string, (string name, Sprite image, GameObject item, Weapon weapon, Cloud cloud)>>
         {
             {
@@ -145,13 +135,10 @@ public class MixElements : MonoBehaviour
             }
         };
 
-        // Check if the special element exists in the mapping
         if (rewardMappings.TryGetValue(specialElement, out var basicElementMappings))
         {
-            // Check if the most common basic element exists for the special element
             if (basicElementMappings.TryGetValue(mostCommonBasicElement, out var rewardDetails))
             {
-                // Apply the reward details
                 acceptMix.ChangeItemInfo(rewardDetails.image, rewardDetails.name);
                 acceptMix.item = rewardDetails.item;
                 acceptMix.weapon = rewardDetails.weapon;
@@ -168,7 +155,7 @@ public class MixElements : MonoBehaviour
             Debug.LogWarning($"Unhandled special element type: {specialElement}");
         }
 
-        return null; // No valid reward found
+        return null;
     }
 
 }

@@ -8,7 +8,6 @@ public class WeaponItem : MonoBehaviour
     private Weapon weapon;
     public Image image;
 
-    // Initialize the InventoryItem with Potion data
     public void InitializeWeapon(Weapon newWeapon)
     {
         weapon = newWeapon;
@@ -17,7 +16,6 @@ public class WeaponItem : MonoBehaviour
 
     public void ChangeSelectedWeapon()
     {
-        // Find the player's inventory
         var playerInventory = PlayerInventory.Instance;
 
         if (playerInventory != null && playerInventory.weapons.Contains(weapon))

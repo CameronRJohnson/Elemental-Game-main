@@ -4,10 +4,10 @@ using UnityEngine.UI;
 
 public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 {
-    [SerializeField] private Image joystickBackground;  // The background of the joystick
-    [SerializeField] private Image joystickKnob;        // The knob of the joystick
-    [SerializeField] private float joystickRadius = 100f; // Radius limit for the knob movement
-    private Vector2 inputDirection;    // Direction of the joystick movement
+    [SerializeField] private Image joystickBackground;
+    [SerializeField] private Image joystickKnob;
+    [SerializeField] private float joystickRadius = 100f;
+    private Vector2 inputDirection;
 
     private void Start()
     {
@@ -21,14 +21,12 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        // Reset knob position and input direction when released
         joystickKnob.rectTransform.anchoredPosition = Vector2.zero;
         inputDirection = Vector2.zero;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        // Get the position of the pointer relative to the joystick background
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             joystickBackground.rectTransform,
             eventData.position,
@@ -36,23 +34,16 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
             out Vector2 position
         );
 
-        // Normalize the position within the joystick radius
         position = Vector2.ClampMagnitude(position, joystickRadius);
-
-        // Move the joystick knob based on pointer position
         joystickKnob.rectTransform.anchoredPosition = position;
-
-        // Calculate input direction and magnitude (distance from center)
         inputDirection = position / joystickRadius;
     }
 
-    // Function to get the horizontal input
     public float Horizontal()
     {
         return inputDirection.x;
     }
 
-    // Function to get the vertical input
     public float Vertical()
     {
         return inputDirection.y;
@@ -60,7 +51,7 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
 
     public float Magnitude()
     {
-        return inputDirection.magnitude; // Returns distance of knob from center, between 0 and 1
+        return inputDirection.magnitude;
     }
 
     public void ResetJoystick()
@@ -69,3 +60,4 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
         inputDirection = Vector2.zero;
     }
 }
+

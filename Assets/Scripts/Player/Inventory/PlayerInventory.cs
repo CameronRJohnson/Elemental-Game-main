@@ -33,16 +33,15 @@ public class PlayerInventory : MonoBehaviour
 
     private void Awake()
     {
-        // Check if an instance already exists
         if (Instance == null)
         {
             Instance = this;
             saveFilePath = Path.Combine(Application.persistentDataPath, "inventory.json");
-            LoadInventory(); // Load the inventory on start
+            LoadInventory();
         }
         else if (Instance != this)
         {
-            Destroy(gameObject); // Prevent duplicates
+            Destroy(gameObject);
         }
 
         if (weapons.Count == 0)
@@ -70,7 +69,6 @@ public class PlayerInventory : MonoBehaviour
             return;
         }
 
-        // Check if the potion is already collected
         if (collectedPotions.Contains(pickedUpPotion))
         {
             Element existingPotion = collectedPotions.Find(p => p.name == pickedUpPotion.name);
@@ -78,7 +76,6 @@ public class PlayerInventory : MonoBehaviour
             return;
         }
 
-        // Add potion to the collected list
         pickedUpPotion.numberCollected = 1;
         collectedPotions.Add(pickedUpPotion);
     }
@@ -118,12 +115,10 @@ public class PlayerInventory : MonoBehaviour
 
     public void ResetInventory()
     {
-        // Clear the in-memory inventory
         collectedPotions.Clear();
         weapons.Clear();
         clouds.Clear();
 
-        // Overwrite the save file with an empty inventory
         SaveInventory();
         SceneManager.LoadScene("Home");
         Debug.Log("Inventory has been reset.");
@@ -131,10 +126,8 @@ public class PlayerInventory : MonoBehaviour
 
     public void SaveInventory()
     {
-        // Create a wrapper containing the lists and selected items
         InventoryWrapper wrapper = new InventoryWrapper(collectedPotions, weapons, clouds, selectedWeapon, selectedCloud);
 
-        // Serialize to JSON
         string json = JsonUtility.ToJson(wrapper);
         File.WriteAllText(saveFilePath, json);
         Debug.Log("Inventory saved.");
@@ -144,11 +137,9 @@ public class PlayerInventory : MonoBehaviour
     {
         if (File.Exists(saveFilePath))
         {
-            // Read and deserialize the JSON file
             string json = File.ReadAllText(saveFilePath);
             InventoryWrapper wrapper = JsonUtility.FromJson<InventoryWrapper>(json);
 
-            // Clear and populate the lists
             collectedPotions.Clear();
             weapons.Clear();
             clouds.Clear();
@@ -176,7 +167,6 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    // Updates all the images in the player UI
     public void UpdateAllImages()
     {
         if (selectedCloud == null || selectedCloud.image == null)
@@ -203,7 +193,6 @@ public class PlayerInventory : MonoBehaviour
     }
 }
 
-// Wrapper class for JSON serialization
 [System.Serializable]
 public class InventoryWrapper
 {

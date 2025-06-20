@@ -9,7 +9,7 @@ public class DeerEnemy : Enemy
     public float dropChance = 0.3f;
     public float patrolDelay;
     public float sightRange = 10f;
-    public ParticleSystem explosionEffect; // Assign the particle system prefab here
+    public ParticleSystem explosionEffect;
 
     private float stopDistance = 2f;
     private Vector3 randomPatrolTarget;
@@ -180,12 +180,11 @@ public class DeerEnemy : Enemy
     {
         DropItem();
 
-        // Play the explosion effect
         if (explosionEffect != null)
         {
             ParticleSystem explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
             explosion.Play();
-            Destroy(explosion.gameObject, explosion.main.duration); // Clean up the particle system
+            Destroy(explosion.gameObject, explosion.main.duration);
         }
 
         Destroy(healthBar.gameObject);

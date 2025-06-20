@@ -38,13 +38,11 @@ public class PlayerStats : MonoBehaviour
 
     private void InitalizeBox(GameObject content, float playerInventoryReference) 
     {
-        // Clear existing inventory slots if needed
         foreach (Transform child in content.transform)
         {
             Destroy(child.gameObject);
         }
 
-        // Loop through the playerInventoryReference to instantiate power boxes
         for (int i = 0; i < Mathf.FloorToInt(playerInventoryReference); i++) 
         {
             GameObject powerBox = Instantiate(powerBoxPrefab, content.transform);

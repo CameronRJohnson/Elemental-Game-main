@@ -32,7 +32,6 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Die()
     {
-        // Placeholder for death behavior
         Destroy(gameObject);
     }
 }

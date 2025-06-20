@@ -15,10 +15,9 @@ public class ChangeCloud : MonoBehaviour
             return;
         }
 
-        // Update the player's MeshFilter and MeshRenderer with the new cloud object
         if (playerRenderer != null)
         {
-            playerRenderer.materials = newRenderer.sharedMaterials; // Update materials
+            playerRenderer.materials = newRenderer.sharedMaterials;
         }
         else
         {
@@ -27,7 +26,7 @@ public class ChangeCloud : MonoBehaviour
 
         if (playerFilter != null)
         {
-            playerFilter.mesh = newFilter.sharedMesh; // Update the mesh
+            playerFilter.mesh = newFilter.sharedMesh;
         }
         else
         {

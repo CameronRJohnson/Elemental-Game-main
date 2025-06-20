@@ -14,9 +14,9 @@ public class PlayerTriggerHandler : MonoBehaviour
     public float cooldownTime = 1.0f;
     public ContentManager contentManager;
 
-    [SerializeField] private Slider actionSliderPrefab; // Prefab for action slider
-    private Slider actionSliderInstance; // Instance of the action slider
-    private float actionFillDuration = 1f; // Time to fully fill the slider
+    [SerializeField] private Slider actionSliderPrefab;
+    private Slider actionSliderInstance;
+    private float actionFillDuration = 1f;
     private Coroutine actionCoroutine;
 
     private PlayerController playerController;
@@ -44,7 +44,7 @@ public class PlayerTriggerHandler : MonoBehaviour
         }
         else if ((collider.CompareTag("Cloud Factory") || collider.CompareTag("Brew")) && !isCooldownActive)
         {
-            if (actionCoroutine == null) // Start the fill action if not already active
+            if (actionCoroutine == null)
             {
                 actionCoroutine = StartCoroutine(StartActionFill(collider));
             }
@@ -59,7 +59,6 @@ public class PlayerTriggerHandler : MonoBehaviour
         }
         else if (collider.CompareTag("Cloud Factory") || collider.CompareTag("Brew"))
         {
-            // Stop fill if player exits trigger area before it completes
             if (actionCoroutine != null)
             {
                 StopCoroutine(actionCoroutine);
@@ -68,14 +67,14 @@ public class PlayerTriggerHandler : MonoBehaviour
 
             if (actionSliderInstance != null)
             {
-                Destroy(actionSliderInstance.gameObject); // Remove slider
+                Destroy(actionSliderInstance.gameObject);
             }
         }
     }
 
     private IEnumerator StartActionFill(Collider collider)
     {
-        Vector3 offsetPosition = collider.transform.position + Vector3.up * 100f; // Adjust vertical offset
+        Vector3 offsetPosition = collider.transform.position + Vector3.up * 100f;
         actionSliderInstance = Instantiate(actionSliderPrefab, offsetPosition, Quaternion.identity);
         actionSliderInstance.transform.SetParent(FindObjectOfType<Canvas>().transform, false);
 
@@ -107,7 +106,7 @@ public class PlayerTriggerHandler : MonoBehaviour
 
     private void ActivateCloudTrigger()
     {
-        playerController.GetComponent<Rigidbody>().velocity = Vector3.zero;  // Stop movement
+        playerController.GetComponent<Rigidbody>().velocity = Vector3.zero;
         cloudFactoryUI.SetActive(true);
         foreach (GameObject go in hideOnActive) go.SetActive(false);
         joystickController.ResetJoystick();
@@ -115,14 +114,13 @@ public class PlayerTriggerHandler : MonoBehaviour
 
     private void ActivateBrewTrigger()
     {
-        playerController.GetComponent<Rigidbody>().velocity = Vector3.zero;  // Stop movement
+        playerController.GetComponent<Rigidbody>().velocity = Vector3.zero;
         brewCamera.SetActive(true);
         foreach (GameObject go in hideOnActive) go.SetActive(false);
         joystickController.ResetJoystick();
         contentManager.UpdateInventoryUI();
-        StartCoroutine(WaitAndEnableBrewUI()); // Correctly start the coroutine
+        StartCoroutine(WaitAndEnableBrewUI());
     }
-
 
     public void HandleActionExit()
     {
@@ -132,26 +130,23 @@ public class PlayerTriggerHandler : MonoBehaviour
         }
     }
 
-    // Coroutine to wait and then enable the game UI after the spinner animation
     private IEnumerator WaitAndEnableBrewUI() {
         yield return new WaitForSeconds(2f);
         foreach (GameObject go in showOnActiveBrewery) go.SetActive(true);
     }
 
     public void HandleBrewExit() {
-        // Revert UI elements to their default state
         foreach (GameObject go in showOnActiveBrewery)
         {
             go.SetActive(false);
         }
 
-        brewCamera.SetActive(false);  
+        brewCamera.SetActive(false);
 
-        StartCoroutine(WaitAndDisableBrewUI()); 
+        StartCoroutine(WaitAndDisableBrewUI());
     }
 
-        // Coroutine to wait and then enable the game UI after the spinner animation
-    public IEnumerator WaitAndDisableBrewUI() { 
+    public IEnumerator WaitAndDisableBrewUI() {
         yield return new WaitForSeconds(2f);
         foreach (GameObject go in hideOnActive) go.SetActive(true);
     }

@@ -7,15 +7,15 @@ public class ElementReference : MonoBehaviour
     [SerializeField]
     public Element element;
 
-    private bool isPotionCollected = false; // Flag to prevent repeated collection
+    private bool isPotionCollected = false;
 
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !isPotionCollected)
         {
-            isPotionCollected = true; // Set the flag to true when collected
-            Destroy(gameObject); // Destroy the object after collection
+            isPotionCollected = true;
+            Destroy(gameObject);
             {
                 PlayerInventory.Instance.AddPotionToInventory(element);
             }

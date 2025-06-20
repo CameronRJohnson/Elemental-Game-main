@@ -7,14 +7,14 @@ using UnityEngine.UI;
 public class PotionSpawner : MonoBehaviour
 {
     [Header("Potion Configuration")]
-    public GameObject potionObject; // Prefab of the potion to spawn
-    public Transform potionContainer; // The container where potions are spawned
-    public Element element; // Current potion object reference
+    public GameObject potionObject;
+    public Transform potionContainer;
+    public Element element;
 
     [Header("UI Elements")]
-    public Text elementName; // Potion name text
-    public Text elementDescription; // Potion description text
-    public Image elementImage; // Potion sprite image
+    public Text elementName;
+    public Text elementDescription;
+    public Image elementImage;
     public ContentManager contentManager;
 
     [Header("Launch Configuration")]
@@ -26,10 +26,8 @@ public class PotionSpawner : MonoBehaviour
 
     void Update()
     {
-        // Exit early if no valid potion is assigned
         if (potionObject == null || element == null) return;
 
-        // Check for player input and ensure it's not over a UI element
         if ((Input.GetButtonDown("Fire1") || IsTouchInput()) && !IsPointerOverUI())
         {
             TrySpawnPotion();
@@ -44,7 +42,6 @@ public class PotionSpawner : MonoBehaviour
             return;
         }
 
-        // Find the potion in the inventory
         Element playerPotion = PlayerInventory.Instance.collectedPotions.Find(p => p.name == element.name);
 
         if (playerPotion == null)
@@ -62,13 +59,11 @@ public class PotionSpawner : MonoBehaviour
             return;
         }
 
-        // Check if the potion is a star and if a star is already spawned
         if (IsStarPotion(playerPotion) && IsStarAlreadySpawned())
         {
             return;
         }
 
-        // Decrement the potion count and spawn the potion
         playerPotion.numberCollected--;
         SpawnPotion();
 
@@ -79,18 +74,15 @@ public class PotionSpawner : MonoBehaviour
             contentManager?.SetTextToZero();
         }
 
-        // Update the inventory UI
         contentManager?.UpdateInventoryUI();
     }
 
     private void SpawnPotion()
     {
-        // Generate random launch velocities
         float launchVelocityY = baseLaunchVelocityY + Random.Range(randomRangeVelocityY.x, randomRangeVelocityY.y);
         float launchVelocityZ = baseLaunchVelocityZ + Random.Range(randomRangeVelocityZ.x, randomRangeVelocityZ.y);
         float launchVelocityX = Random.Range(randomRangeVelocityX.x, randomRangeVelocityX.y);
 
-        // Instantiate the potion and apply force
         GameObject spawnedPotion = Instantiate(potionObject, transform.position, transform.rotation, potionContainer);
         Rigidbody rb = spawnedPotion.GetComponent<Rigidbody>();
 
@@ -134,7 +126,6 @@ public class PotionSpawner : MonoBehaviour
 
     private bool IsPointerOverUI()
     {
-        // Check for pointer or touch input over UI elements
         if (EventSystem.current.IsPointerOverGameObject()) return true;
 
         if (Input.touchCount > 0)
@@ -148,13 +139,11 @@ public class PotionSpawner : MonoBehaviour
 
     private bool IsStarPotion(Element potionToCheck)
     {
-        // Determine if the potion is a "star" potion
         return potionToCheck.isWorldStar || potionToCheck.isCloudStar || potionToCheck.isWeaponStar;
     }
 
     private bool IsStarAlreadySpawned()
     {
-        // Check the potion container for any existing "star" potions
         foreach (Transform child in potionContainer)
         {
             ElementReference spawnedPotion = child.GetComponent<ElementReference>();

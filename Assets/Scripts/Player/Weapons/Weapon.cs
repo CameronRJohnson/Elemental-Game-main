@@ -5,7 +5,7 @@ using UnityEngine;
 public class Weapon : ScriptableObject
 {
     [Header("Weapon Details")]
-    public Sprite image; // Icon or visual representation of the potion
+    public Sprite image;
 
     [Header("Projectile Settings")]
     public float damage = 10f;
@@ -18,7 +18,7 @@ public class Weapon : ScriptableObject
     public float destroyDelay = 5f;
 
     [Header("Game Object Reference")]
-    public GameObject projectile; // Reference to the GameObject prefab for this potion
+    public GameObject projectile;
 
     private float nextShootTime = 0f;
 
@@ -43,7 +43,6 @@ public class Weapon : ScriptableObject
 
         nextShootTime = Time.time + timeBetweenShots;
 
-        // Start destruction timer (via MonoBehaviour on the projectile)
         MonoBehaviour projectileBehaviour = projectile.GetComponent<MonoBehaviour>();
         if (projectileBehaviour != null)
         {
