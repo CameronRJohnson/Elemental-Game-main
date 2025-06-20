@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076827541d09d4128aff6870c15c44a2, type: 3}
+  m_Name: Air Element
+  m_EditorClassIdentifier: 
+  image: {fileID: 21300000, guid: e037f95ec05684ec7ac5612b8d9b7d21, type: 3}
+  potionGameObject: {fileID: 2668776059482794376, guid: b3a3d9db6a4834d4cab99ed21baa3fb0,
+    type: 3}
+  description: Made in the air!
+  potionType: 1

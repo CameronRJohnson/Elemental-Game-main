@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 64b0a616d0ae645a9af0925474c11d8d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - target: {instanceID: 0}
+  - healthBarPrefab: {fileID: 7845033791964128283, guid: 70444c10d547e4d8193208cac23804a7,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

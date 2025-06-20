@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076827541d09d4128aff6870c15c44a2, type: 3}
+  m_Name: Fire Element
+  m_EditorClassIdentifier: 
+  image: {fileID: 21300000, guid: 21e4eebf9a33e4dc399cd222e7ab61a1, type: 3}
+  description: A potion made in hell...
+  potionType: 2
+  numberCollected: 10
+  isWorldStar: 0
+  isCloudStar: 0
+  isWeaponStar: 0
+  potionGameObject: {fileID: 20196286134910416, guid: e435e3b5266bb45968ac43a36f7b3e58,
+    type: 3}
